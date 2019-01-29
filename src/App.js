@@ -16,11 +16,11 @@ class App extends Component {
 
   // "Handler" => Not actively calling this method, 
   // but I'm assigning it as a method handler.
-  switchNameHandler = () => { 
+  switchNameHandler = (newName) => { 
     //console.log("Was clicked!");
     this.setState({
       persons: [
-        { name: "Maximilian, age: 28" },
+        { name: newName, age: 28 },
         { name: "Manu", age: 29 },
         { name: "Stephanie", age: 27 }
       ]
@@ -37,7 +37,7 @@ class App extends Component {
         <p>This is really working!</p>
 
         {/* Execute dynamic code */}
-        <button onClick={this.switchNameHandler}>Switch Name</button>
+        <button onClick={this.switchNameHandler.bind(this, "Maximilian")}>Switch Name</button>
 
         <Person 
           name={this.state.persons[0].name} 
@@ -45,7 +45,7 @@ class App extends Component {
         <Person 
           name={this.state.persons[1].name} 
           age={this.state.persons[1].age}
-          click={this.switchNameHandler}
+          click={this.switchNameHandler.bind(this, "Max!")}
           >
             Hobbies: Racing
         </Person>

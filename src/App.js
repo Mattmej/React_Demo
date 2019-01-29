@@ -9,13 +9,23 @@ class App extends Component {
       { name: "Max", age: 28 },
       { name: "Manu", age: 29 },
       { name: "Stephanie", age: 26 }
-    ]
+    ],
+
+    otherState: "some other value"
   }
 
   // "Handler" => Not actively calling this method, 
   // but I'm assigning it as a method handler.
   switchNameHandler = () => { 
-    console.log("Was clicked!");
+    //console.log("Was clicked!");
+    this.setState({
+      persons: [
+        { name: "Maximilian, age: 28" },
+        { name: "Manu", age: 29 },
+        { name: "Stephanie", age: 27 }
+      ]
+    
+    })
   }
 
 
@@ -29,14 +39,23 @@ class App extends Component {
         {/* Execute dynamic code */}
         <button onClick={this.switchNameHandler}>Switch Name</button>
 
-        <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
-        <Person name={this.state.persons[1].name} age={this.state.persons[1].age}>Hobbies: Racing</Person>
-        <Person name={this.state.persons[2].name} age={this.state.persons[2].age}/>
+        <Person 
+          name={this.state.persons[0].name} 
+          age={this.state.persons[0].age} />
+        <Person 
+          name={this.state.persons[1].name} 
+          age={this.state.persons[1].age}
+          click={this.switchNameHandler}
+          >
+            Hobbies: Racing
+        </Person>
+        <Person 
+          name={this.state.persons[2].name} 
+          age={this.state.persons[2].age}/>
 
       </div>
     );
 
-    // return React.createElement("div", {className: "App"}, React.createElement("h1", null, "Does this work now?"))
   }
 }
 

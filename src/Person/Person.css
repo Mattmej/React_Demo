@@ -1,0 +1,21 @@
+/* CSS here is NOT scoped to the Person.js file.
+    It is global CSS code.
+*/
+
+/* So I will define a new CSS class, 
+    and assign it to the div in Person.js. */
+.Person { 
+    width: 60%;
+    margin: 16px auto;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 3px #ccc;
+    padding: 16px;
+    text-align: center;
+
+}
+
+/* By default, file is not added to our project.
+    We always need to import file to add it to the project.
+    Import the Person component in App.js,
+        and also import the Person.css file in Person.js.
+*/

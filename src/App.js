@@ -45,28 +45,24 @@ class App extends Component {
 
   render() {
 
+    // We are writing Javascript here,
+    // so the values of the properties have to be strings.
+    const style = { 
+      backgroundColor: 'white', 
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+    }
+
     return (
       <div className="App">
         <h1>Hi I am a React app!</h1>
         <p>This is really working!</p>
 
-        {/* Arrow function that takes no arguments,
-              but theoretically it would receive an event object
-              (we won't use it here)
-
-            Returns a function call (note the parentheses).
-            It is not getting executed immediately.
-            Instead, an anonymous function is passed,
-              which will be executed on a click
-              and returns the result of the function being executed.
-
-        
-            Implicitly adds a return keyword in front of the code 
-              that comes directly after the arrow, if it is written in one line.
-              (This is a feature of arrow functions)
-        */}
-
-        <button onClick={() => this.switchNameHandler("Maximilian!!")}>Switch Name</button>
+        <button 
+          style={style}
+          onClick={() => this.switchNameHandler("Maximilian!!")}>Switch Name</button>
 
         <Person 
           name={this.state.persons[0].name} 

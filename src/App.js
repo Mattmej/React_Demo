@@ -11,7 +11,8 @@ class App extends Component {
       { name: "Stephanie", age: 26 }
     ],
 
-    otherState: "some other value"
+    otherState: "some other value",
+    showPersons: false
   }
 
   // "Handler" => Not actively calling this method, 
@@ -42,6 +43,10 @@ class App extends Component {
     })
   }
 
+  togglePersonsHandler = () => { 
+    const doesShow = this.state.showPersons;
+    this.setState({showPersons: !doesShow})
+  }
 
   render() {
 
@@ -62,22 +67,33 @@ class App extends Component {
 
         <button 
           style={style}
-          onClick={() => this.switchNameHandler("Maximilian!!")}>Switch Name</button>
+          onClick={this.togglePersonsHandler}>Toggle Persons</button>
 
-        <Person 
-          name={this.state.persons[0].name} 
-          age={this.state.persons[0].age} />
-        <Person 
-          name={this.state.persons[1].name} 
-          age={this.state.persons[1].age}
-          click={this.switchNameHandler.bind(this, "Max!")}
-          changed={this.nameChangedHandler}
-          >
-            Hobbies: Racing
-        </Person>
-        <Person 
-          name={this.state.persons[2].name} 
-          age={this.state.persons[2].age}/>
+        {/* If showPersons === true, display the div.
+            Otherwise, do not display anything. */}
+
+        { 
+          this.state.showPersons ? 
+        
+          <div>
+            <Person 
+              name={this.state.persons[0].name} 
+              age={this.state.persons[0].age} />
+            <Person 
+              name={this.state.persons[1].name} 
+              age={this.state.persons[1].age}
+              click={this.switchNameHandler.bind(this, "Max!")}
+              changed={this.nameChangedHandler}
+              >
+                Hobbies: Racing
+            </Person>
+            <Person 
+              name={this.state.persons[2].name} 
+              age={this.state.persons[2].age}/>
+
+          </div> : null
+        }
+        
 
       </div>
     );

@@ -15,20 +15,6 @@ class App extends Component {
     showPersons: false
   }
 
-  // "Handler" => Not actively calling this method, 
-  // but I'm assigning it as a method handler.
-  switchNameHandler = (newName) => { 
-    //console.log("Was clicked!");
-    this.setState({
-      persons: [
-        { name: newName, age: 28 },
-        { name: "Manu", age: 29 },
-        { name: "Stephanie", age: 27 }
-      ]
-    
-    })
-  }
-
   nameChangedHandler = (event) => {
     this.setState({
       persons: [
@@ -41,6 +27,24 @@ class App extends Component {
       ]
     
     })
+  }
+
+  deletePersonHandler = (personIndex) => { 
+
+    // Fetch all the persons
+
+    // ONE OPTION:
+    // const persons = this.state.persons.slice();
+
+    // ES6 ALTERNATIVE:
+    // spreads out the elements of this array into a list of elements
+    // which gets added to a new array.
+    // Now we have a new array with the objects of the old array,
+    // but not the old array itself
+    const persons = [...this.state.persons];
+    persons.splice(personIndex, 1);    // remove one element from the array
+    this.setState({persons: persons});        // NOTE: This approach has a flaw. It will be covered in the next lecture.
+
   }
 
   togglePersonsHandler = () => { 
@@ -58,6 +62,34 @@ class App extends Component {
       border: '1px solid blue',
       padding: '8px',
       cursor: 'pointer'
+    };
+
+    // We will render either nothing, or the list of persons
+    // depending on the state of showPersons
+
+    // State change will trigger an update.
+
+    // Rendering nothing initially
+    let persons = null;
+
+    // ...but if showPersons is true, then persons will be rendered.
+    if (this.state.showPersons) { 
+      persons = (
+        <div>
+
+
+          {this.state.persons.map((person, index) => {
+            // return what you want to map this item into.
+            // Handlers are removed for now.
+            return <Person 
+              click={() => this.deletePersonHandler(index)}
+              name={person.name} 
+              age={person.age} />
+          })}
+
+
+        </div>
+      );
     }
 
     return (
@@ -69,32 +101,8 @@ class App extends Component {
           style={style}
           onClick={this.togglePersonsHandler}>Toggle Persons</button>
 
-        {/* If showPersons === true, display the div.
-            Otherwise, do not display anything. */}
-
-        { 
-          this.state.showPersons ? 
-        
-          <div>
-            <Person 
-              name={this.state.persons[0].name} 
-              age={this.state.persons[0].age} />
-            <Person 
-              name={this.state.persons[1].name} 
-              age={this.state.persons[1].age}
-              click={this.switchNameHandler.bind(this, "Max!")}
-              changed={this.nameChangedHandler}
-              >
-                Hobbies: Racing
-            </Person>
-            <Person 
-              name={this.state.persons[2].name} 
-              age={this.state.persons[2].age}/>
-
-          </div> : null
-        }
-        
-
+        {persons}
+      
       </div>
     );
 

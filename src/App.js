@@ -6,27 +6,50 @@ class App extends Component {
 
   state = { 
     persons: [
-      { name: "Max", age: 28 },
-      { name: "Manu", age: 29 },
-      { name: "Stephanie", age: 26 }
+      { id: 'egerg', name: "Max", age: 28 },
+      { id: 'asdgsx', name: "Manu", age: 29 },
+      { id: 'kuijymh', name: "Stephanie", age: 26 }
     ],
 
     otherState: "some other value",
     showPersons: false
   }
 
-  nameChangedHandler = (event) => {
-    this.setState({
-      persons: [
-        { name: "Max", age: 28 },
+  nameChangedHandler = (event, id) => {
 
-        /* The input here will be the target into which we typed.*/
-        { name: event.target.value, age: 29 },
+    // finding a single person
+    // Returns a boolean value.
+    const personIndex = this.state.persons.findIndex(p => {
 
-        { name: "Stephanie", age: 26 }
-      ]
-    
-    })
+      // Is this the person I was looking for?
+      // Return either true or false.
+      return p.id === id;
+    });
+
+    // Try not to use this; here we are mutating the state directly.
+    // const person = this.state.persons[personIndex];
+
+    // This is a better way. Using spread operator.
+    // Here we create a new JS object, and make a spread operator
+    // to distribute all of the properties of the object we fetch 
+    // into the new object we are creating here.
+    const person = {
+      ...this.state.persons[personIndex]
+    }
+
+    // Updating the person name to whatever is in the field.
+    // I am NOT manipulating the state directly. 
+    // I am manipulating a copy of the state.
+    person.name = event.target.value;
+
+    // Getting the whole persons array
+    const persons = [...this.state.persons];
+
+    // Updating the persons array at one position
+    // based on whatever changes have occurred.
+    persons[personIndex] = person;
+
+    this.setState( {persons: persons} )
   }
 
   deletePersonHandler = (personIndex) => { 
@@ -43,8 +66,7 @@ class App extends Component {
     // but not the old array itself
     const persons = [...this.state.persons];
     persons.splice(personIndex, 1);    // remove one element from the array
-    this.setState({persons: persons});        // NOTE: This approach has a flaw. It will be covered in the next lecture.
-
+    this.setState({persons: persons});      
   }
 
   togglePersonsHandler = () => { 
@@ -84,7 +106,13 @@ class App extends Component {
             return <Person 
               click={() => this.deletePersonHandler(index)}
               name={person.name} 
-              age={person.age} />
+              age={person.age} 
+              // NOT a good key. If the list changes, every element 
+              // will get a NEW index; it won't keep its original index.
+              // key={index}
+
+              key={person.id}
+              changed={(event) => this.nameChangedHandler(event, person.id)} />
           })}
 
 

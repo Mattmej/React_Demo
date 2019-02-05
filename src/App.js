@@ -18,11 +18,12 @@ class App extends Component {
   nameChangedHandler = (event, id) => {
 
     // finding a single person
-    // Returns a boolean value.
+    // Takes a function as an input value.
+    // (p = a "person" object)
     const personIndex = this.state.persons.findIndex(p => {
 
       // Is this the person I was looking for?
-      // Return either true or false.
+      // Find index where this statement is true.
       return p.id === id;
     });
 

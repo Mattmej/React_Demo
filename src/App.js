@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import Radium, { StyleRoot } from 'radium';
 import Person from './Person/Person';
 
 class App extends Component {
@@ -87,10 +86,7 @@ class App extends Component {
       border: '1px solid blue',
       padding: '8px',
       cursor: 'pointer',
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black'
-      }
+
     };
 
     // We will render either nothing, or the list of persons
@@ -129,10 +125,7 @@ class App extends Component {
       // Dynamically changing button color.
       // If showPersons is true, then the button's background will turn red.
       style.backgroundColor = 'red';
-      style[':hover'] = {
-        backgroundColor: 'salmon',
-        color: 'black'
-      }
+
     }
 
     // === One way to dynamically add classes: array of strings. ===
@@ -151,7 +144,6 @@ class App extends Component {
     }
 
     return (
-      <StyleRoot>
         <div className="App">
           <h1>Hi I am a React app!</h1>
           <p className={classes.join(' ')}>This is really working!</p>
@@ -163,11 +155,10 @@ class App extends Component {
           {persons}
       
         </div>
-      </StyleRoot>
     );
   }
 }
 
 // A higher-order component.
 // A component wrapping another component.
-export default Radium(App);
+export default App;

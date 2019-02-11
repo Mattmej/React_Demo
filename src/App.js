@@ -22,9 +22,13 @@ class App extends Component {
     // (p = a "person" object)
     const personIndex = this.state.persons.findIndex(p => {
 
-      // Is this the person I was looking for?
-      // Find index where this statement is true.
-      return p.id === id;
+      // This logical error won't give an error in the console.
+      // But still, we have broken two-way binding between
+      // the text input and the paragraph.
+      // No matter how much we type in the text input, 
+      // neither the text in the paragraph 
+      // nor the text in the text input will change.
+      return p.userId === id;
     });
 
     // Try not to use this; here we are mutating the state directly.

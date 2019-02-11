@@ -14,16 +14,10 @@
 
 }
 
-/* 
-Media Query 
-But I don't want to use a CSS class for this for some reason.
-See Person.js.
-*/
-
 
 /* Regular CSS way. */
-/* @media (min-width: 500px) {
+@media (min-width: 500px) {
     .Person {
         width: 450px;
     }
-} */
+}

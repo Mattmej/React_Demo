@@ -77,17 +77,8 @@ class App extends Component {
 
   render() {
 
-    // We are writing Javascript here,
-    // so the values of the properties have to be strings.
-    const style = { 
-      backgroundColor: 'green', 
-      color: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer',
+    let btnClass = '';
 
-    };
 
     // We will render either nothing, or the list of persons
     // depending on the state of showPersons
@@ -101,8 +92,6 @@ class App extends Component {
     if (this.state.showPersons) { 
       persons = (
         <div>
-
-
           {this.state.persons.map((person, index) => {
             // return what you want to map this item into.
             // Handlers are removed for now.
@@ -122,9 +111,9 @@ class App extends Component {
         </div>
       );
 
-      // Dynamically changing button color.
-      // If showPersons is true, then the button's background will turn red.
-      style.backgroundColor = 'red';
+      // classes.Red is a string created by the CSS loader.
+      btnClass = classes.Red;
+
 
     }
 
@@ -153,7 +142,7 @@ class App extends Component {
           <p className={assignedClasses.join(' ')}>This is really working!</p>
 
           <button 
-            style={style}
+            className={btnClass}
             onClick={this.togglePersonsHandler}>Toggle Persons</button>
 
           {persons}

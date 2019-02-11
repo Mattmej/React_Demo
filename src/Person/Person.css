@@ -14,8 +14,16 @@
 
 }
 
-/* By default, file is not added to our project.
-    We always need to import file to add it to the project.
-    Import the Person component in App.js,
-        and also import the Person.css file in Person.js.
+/* 
+Media Query 
+But I don't want to use a CSS class for this for some reason.
+See Person.js.
 */
+
+
+/* Regular CSS way. */
+/* @media (min-width: 500px) {
+    .Person {
+        width: 450px;
+    }
+} */

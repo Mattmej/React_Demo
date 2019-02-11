@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Radium, { StyleRoot } from 'radium';
 import Person from './Person/Person';
 
 class App extends Component {
@@ -80,11 +81,16 @@ class App extends Component {
     // We are writing Javascript here,
     // so the values of the properties have to be strings.
     const style = { 
-      backgroundColor: 'white', 
+      backgroundColor: 'green', 
+      color: 'white',
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
     };
 
     // We will render either nothing, or the list of persons
@@ -119,23 +125,49 @@ class App extends Component {
 
         </div>
       );
+
+      // Dynamically changing button color.
+      // If showPersons is true, then the button's background will turn red.
+      style.backgroundColor = 'red';
+      style[':hover'] = {
+        backgroundColor: 'salmon',
+        color: 'black'
+      }
+    }
+
+    // === One way to dynamically add classes: array of strings. ===
+
+    // Test.
+    // Make text red and bold no matter what.
+    // let classes = ['red', 'bold'].join(' ');
+
+    const classes = [];
+    if (this.state.persons.length <= 2) {
+      classes.push('red');  // classes = ['red']
+    }
+
+    if (this.state.persons.length <= 1) {
+      classes.push('bold'); // classes = ['red', 'bold']
     }
 
     return (
-      <div className="App">
-        <h1>Hi I am a React app!</h1>
-        <p>This is really working!</p>
+      <StyleRoot>
+        <div className="App">
+          <h1>Hi I am a React app!</h1>
+          <p className={classes.join(' ')}>This is really working!</p>
 
-        <button 
-          style={style}
-          onClick={this.togglePersonsHandler}>Toggle Persons</button>
+          <button 
+            style={style}
+            onClick={this.togglePersonsHandler}>Toggle Persons</button>
 
-        {persons}
+          {persons}
       
-      </div>
+        </div>
+      </StyleRoot>
     );
-
   }
 }
 
-export default App;
+// A higher-order component.
+// A component wrapping another component.
+export default Radium(App);

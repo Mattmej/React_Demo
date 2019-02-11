@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from './App.css';
 import Person from './Person/Person';
 
 class App extends Component {
@@ -134,19 +134,23 @@ class App extends Component {
     // Make text red and bold no matter what.
     // let classes = ['red', 'bold'].join(' ');
 
-    const classes = [];
+    const assignedClasses = [];
     if (this.state.persons.length <= 2) {
-      classes.push('red');  // classes = ['red']
+      assignedClasses.push(classes.red);  // classes = ['red']
     }
 
     if (this.state.persons.length <= 1) {
-      classes.push('bold'); // classes = ['red', 'bold']
+      assignedClasses.push(classes.bold); // classes = ['red', 'bold']
     }
 
     return (
-        <div className="App">
+
+        // Applies the .App CSS class and styles to this div.
+        // The CSS loader transforms the CSS classname we set up 
+        // in the CSS file into a unique one.
+        <div className={classes.App}>
           <h1>Hi I am a React app!</h1>
-          <p className={classes.join(' ')}>This is really working!</p>
+          <p className={assignedClasses.join(' ')}>This is really working!</p>
 
           <button 
             style={style}

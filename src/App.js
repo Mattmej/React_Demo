@@ -28,7 +28,7 @@ class App extends Component {
       // No matter how much we type in the text input, 
       // neither the text in the paragraph 
       // nor the text in the text input will change.
-      return p.userId === id;
+      return p.id === id;
     });
 
     // Try not to use this; here we are mutating the state directly.

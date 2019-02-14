@@ -5,7 +5,15 @@ import classes from './Person.css';
 const person = (props) => { 
     // return <p>I'm a Person and I am {Math.floor(Math.random() * 30)} years old!</p>
 
+    const rnd = Math.random();
+
+    if (rnd > 0.7) { 
+        throw new Error('Something went wrong.');
+    }
+
     return (
+
+
 
         // NOTE: Here, the CSS class is unique.
         <div className={classes.Person}>

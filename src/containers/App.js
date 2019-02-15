@@ -5,15 +5,48 @@ import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
 
-  state = { 
-    persons: [
-      { id: 'egerg', name: "Max", age: 28 },
-      { id: 'asdgsx', name: "Manu", age: 29 },
-      { id: 'kuijymh', name: "Stephanie", age: 26 }
-    ],
+  constructor(props) {
 
-    otherState: "some other value",
-    showPersons: false
+    // Executes the constructor of the component we are extending
+    super(props);
+
+    console.log('[App.js] constructor');
+
+    // Older syntax for initializing state.
+    this.state = {
+      persons: [
+        { id: 'egerg', name: "Max", age: 28 },
+        { id: 'asdgsx', name: "Manu", age: 29 },
+        { id: 'kuijymh', name: "Stephanie", age: 26 }
+      ],
+  
+      otherState: "some other value",
+      showPersons: false
+    }
+  }
+
+
+  // This is more modern JS syntax. 
+  // An alternate way is displayed above.
+  // state = { 
+  //   persons: [
+  //     { id: 'egerg', name: "Max", age: 28 },
+  //     { id: 'asdgsx', name: "Manu", age: 29 },
+  //     { id: 'kuijymh', name: "Stephanie", age: 26 }
+  //   ],
+
+  //   otherState: "some other value",
+  //   showPersons: false
+  // }
+
+
+  static getDerivedStateFromProps (props, state) {
+    console.log('[App.js] getDerivedStateFromProps', props);
+    return state;
+  }
+
+  componentDidMount() {
+    console.log('[App.js] componentDidMount');
   }
 
   nameChangedHandler = (event, id) => {
@@ -75,7 +108,7 @@ class App extends Component {
 
   render() {
 
-
+    console.log('[App.js] render');
 
     // We will render either nothing, or the list of persons
     // depending on the state of showPersons
@@ -111,6 +144,7 @@ class App extends Component {
         <div className={classes.App}>
           
           <Cockpit 
+            title={this.props.appTitle}
             showPersons={this.state.showPersons}
             persons={this.state.persons}
             clicked={this.togglePersonsHandler} />

@@ -4,14 +4,14 @@
 import React from 'react';
 import Person from './Person/Person';
 
-const persons = (props) => 
-    // If it is on one line, we can omit the "return" statement.
-    // return ();
+const persons = (props) => {
 
-    props.persons.map( (person, index) => {
+    console.log('[Persons.js] rendering...');
+
+    return props.persons.map( (person, index) => {
         // return what you want to map this item into.
         // Handlers are removed for now.
-        return <Person 
+        return (<Person 
           click={() => props.clicked(index)}
           name={person.name} 
           age={person.age} 
@@ -21,7 +21,11 @@ const persons = (props) =>
 
           key={person.id}
           changed={(event) => props.changed(event, person.id)} />
-      });
+        );
+    });
+
+};
+
 
 
 

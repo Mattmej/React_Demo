@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classes from './App.css';
-import Person from './Person/Person';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
 
@@ -21,13 +22,6 @@ class App extends Component {
     // Takes a function as an input value.
     // (p = a "person" object)
     const personIndex = this.state.persons.findIndex(p => {
-
-      // This logical error won't give an error in the console.
-      // But still, we have broken two-way binding between
-      // the text input and the paragraph.
-      // No matter how much we type in the text input, 
-      // neither the text in the paragraph 
-      // nor the text in the text input will change.
       return p.id === id;
     });
 
@@ -81,7 +75,6 @@ class App extends Component {
 
   render() {
 
-    let btnClass = '';
 
 
     // We will render either nothing, or the list of persons
@@ -94,31 +87,12 @@ class App extends Component {
 
     // ...but if showPersons is true, then persons will be rendered.
     if (this.state.showPersons) { 
-      persons = (
-        <div>
-          {this.state.persons.map((person, index) => {
-            // return what you want to map this item into.
-            // Handlers are removed for now.
-            return <Person 
-              click={() => this.deletePersonHandler(index)}
-              name={person.name} 
-              age={person.age} 
-              // NOT a good key. If the list changes, every element 
-              // will get a NEW index; it won't keep its original index.
-              // key={index}
 
-              key={person.id}
-              changed={(event) => this.nameChangedHandler(event, person.id)} />
-          })}
-
-
-        </div>
-      );
-
-      // classes.Red is a string created by the CSS loader.
-      btnClass = classes.Red;
-
-
+      // This is one component that renders the lists
+      persons = <Persons 
+          persons={this.state.persons}
+          clicked={this.deletePersonHandler}
+          changed={this.nameChangedHandler} />;
     }
 
     // === One way to dynamically add classes: array of strings. ===
@@ -127,14 +101,7 @@ class App extends Component {
     // Make text red and bold no matter what.
     // let classes = ['red', 'bold'].join(' ');
 
-    const assignedClasses = [];
-    if (this.state.persons.length <= 2) {
-      assignedClasses.push(classes.red);  // classes = ['red']
-    }
 
-    if (this.state.persons.length <= 1) {
-      assignedClasses.push(classes.bold); // classes = ['red', 'bold']
-    }
 
     return (
 
@@ -142,12 +109,11 @@ class App extends Component {
         // The CSS loader transforms the CSS classname we set up 
         // in the CSS file into a unique one.
         <div className={classes.App}>
-          <h1>Hi I am a React app!</h1>
-          <p className={assignedClasses.join(' ')}>This is really working!</p>
-
-          <button 
-            className={btnClass}
-            onClick={this.togglePersonsHandler}>Toggle Persons</button>
+          
+          <Cockpit 
+            showPersons={this.state.showPersons}
+            persons={this.state.persons}
+            clicked={this.togglePersonsHandler} />
 
           {persons}
       

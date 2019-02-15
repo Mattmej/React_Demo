@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import classes from './App.css';
 import Person from './Person/Person';
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
 
@@ -100,17 +99,16 @@ class App extends Component {
           {this.state.persons.map((person, index) => {
             // return what you want to map this item into.
             // Handlers are removed for now.
-            return <ErrorBoundary key={person.id}>
-              <Person 
-                click={() => this.deletePersonHandler(index)}
-                name={person.name} 
-                age={person.age} 
-                // NOT a good key. If the list changes, every element 
-                // will get a NEW index; it won't keep its original index.
-                // key={index}
+            return <Person 
+              click={() => this.deletePersonHandler(index)}
+              name={person.name} 
+              age={person.age} 
+              // NOT a good key. If the list changes, every element 
+              // will get a NEW index; it won't keep its original index.
+              // key={index}
 
-                changed={(event) => this.nameChangedHandler(event, person.id)} /> 
-            </ErrorBoundary>
+              key={person.id}
+              changed={(event) => this.nameChangedHandler(event, person.id)} />
           })}
 
 

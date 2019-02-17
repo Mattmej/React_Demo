@@ -49,6 +49,19 @@ class App extends Component {
     console.log('[App.js] componentDidMount');
   }
 
+  // Has to return something. 
+  // Otherwise returns false and blocks the update.
+  // If update is blocked, then toggling persons won't work.
+  // If this hook is not included, then it defaults to true.
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[App.js] shouldComponentUpdate');
+    return true;
+  }
+
+  componentDidUpdate() {
+    console.log('[App.js] componentDidUpdate');
+  }
+
   nameChangedHandler = (event, id) => {
 
     // finding a single person

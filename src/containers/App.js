@@ -53,6 +53,8 @@ class App extends Component {
   // Otherwise returns false and blocks the update.
   // If update is blocked, then toggling persons won't work.
   // If this hook is not included, then it defaults to true.
+  // NOTE: Can be used for performance improvements. 
+  // We will see this in action later.
   shouldComponentUpdate(nextProps, nextState) {
     console.log('[App.js] shouldComponentUpdate');
     return true;

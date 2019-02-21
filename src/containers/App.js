@@ -21,7 +21,8 @@ class App extends Component {
       ],
   
       otherState: "some other value",
-      showPersons: false
+      showPersons: false,
+      showCockpit: true
     }
   }
 
@@ -157,12 +158,23 @@ class App extends Component {
         // The CSS loader transforms the CSS classname we set up 
         // in the CSS file into a unique one.
         <div className={classes.App}>
+          <button
+            onClick={() => {
+              this.setState( { showCockpit: false });
+            }}
+          >
+            Remove Cockpit
+          </button>
           
-          <Cockpit 
-            title={this.props.appTitle}
-            showPersons={this.state.showPersons}
-            persons={this.state.persons}
-            clicked={this.togglePersonsHandler} />
+          {this.state.showCockpit ? (
+            <Cockpit 
+              title={this.props.appTitle}
+              showPersons={this.state.showPersons}
+              // persons={this.state.persons}
+              personsLength={this.state.persons.length}
+              clicked={this.togglePersonsHandler} 
+            />
+          ) : null}
 
           {persons}
       

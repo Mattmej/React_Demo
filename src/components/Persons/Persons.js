@@ -17,7 +17,23 @@ class Persons extends Component {
     // false if it shouldn't.
 
     console.log('[Persons.js] shouldComponentUpdate');
-    return true;
+
+    // This saves performance. 
+    // For the removal of the cockpit, 
+    // we did not have to go through the entirety of 
+    // the Persons component tree to re-render the page.
+
+    // If the Persons prop has changed, 
+    // then update the Persons component.
+    if (nextProps.persons !== this.props.persons) {
+      return true;
+    }
+
+    // If the Persons prop hasn't changed, then do not update. 
+    else {
+      return false;
+    }
+
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
@@ -30,6 +46,12 @@ class Persons extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     console.log('[Persons.js] componentDidUpdate');
     console.log(snapshot);
+  }
+
+  // In here, we can have any code that needs to run
+  // right before the component is removed.
+  componentWillUnmount() {
+    console.log('[Persons.js] componentWillUnmount');
   }
 
   render() {

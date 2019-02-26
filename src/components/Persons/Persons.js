@@ -1,40 +1,57 @@
 // a functional component
 // because I don't plan on working with state here.
 
-import React, {Component} from 'react';
+// import React, {Component} from 'react';
+import React, { PureComponent } from 'react';
 import Person from './Person/Person';
 
-class Persons extends Component {
+
+
+class Persons extends PureComponent {
 
   // static getDerivedStateFromProps(props, state) {
   //   console.log('[Persons.js] getDerivedStateFromProps');
   //   return state;
   // }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    // must return true or false.
-    // true if react should continue updating,
-    // false if it shouldn't.
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   // must return true or false.
+  //   // true if react should continue updating,
+  //   // false if it shouldn't.
 
-    console.log('[Persons.js] shouldComponentUpdate');
+  //   console.log('[Persons.js] shouldComponentUpdate');
 
-    // This saves performance. 
-    // For the removal of the cockpit, 
-    // we did not have to go through the entirety of 
-    // the Persons component tree to re-render the page.
+  //   // This saves performance. 
+  //   // For the removal of the cockpit, 
+  //   // we did not have to go through the entirety of 
+  //   // the Persons component tree to re-render the page.
 
-    // If the Persons prop has changed, 
-    // then update the Persons component.
-    if (nextProps.persons !== this.props.persons) {
-      return true;
-    }
+  //   // If the Persons prop has changed, 
+  //   // or, if any of the other props have changed,
+  //   // then update the Persons component.
+  //   if (
+  //     nextProps.persons !== this.props.persons || 
+  //     nextProps.changed !== this.props.changed || 
+  //     nextProps.clicked !== this.props.clicked
+  //     ) {
+  //     return true;
+  //   }
 
-    // If the Persons prop hasn't changed, then do not update. 
-    else {
-      return false;
-    }
+  //   // If the props haven't changed, then do not update. 
+  //   else {
+  //     return false;
+  //   }
 
-  }
+  // }
+
+  /* =================================================================== */
+
+  // Alternative to shouldComponentUpdate
+  // if we want to check if all props have changed.
+
+  // We extend a pure component.
+
+
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
     console.log('[Persons.js] getSnapshotBeforeUpdate');
@@ -64,6 +81,7 @@ class Persons extends Component {
           click={() => this.props.clicked(index)}
           name={person.name} 
           age={person.age} 
+
           // NOT a good key. If the list changes, every element 
           // will get a NEW index; it won't keep its original index.
           // key={index}

@@ -3,6 +3,13 @@ import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 
+// We won't use this as a component anymore, so make it lowercase.
+// It isn't a component anymore; it is now just a function.
+// A function that returns a component, but not a component itself.
+import withClass from '../hoc/withClass';
+
+import Aux from '../hoc/Auxiliary'
+
 class App extends Component {
 
   constructor(props) {
@@ -22,7 +29,8 @@ class App extends Component {
   
       otherState: "some other value",
       showPersons: false,
-      showCockpit: true
+      showCockpit: true,
+      changeCounter: 0
     }
   }
 
@@ -97,7 +105,23 @@ class App extends Component {
     // based on whatever changes have occurred.
     persons[personIndex] = person;
 
-    this.setState( {persons: persons} )
+    // Will use optional setState syntax.
+    // Recommended way of updating the state
+    // when depending on the old state.
+    // Receives two arguments.
+    // 1st: old state
+    // 2nd: current props
+    this.setState((prevState, props) => {
+
+      // Returns new state object
+      return {
+        persons: persons,
+
+        // Calling prevState guarantees that
+        // this will be the actual previous state.
+        changeCounter: prevState.changeCounter + 1
+      };
+    });
   }
 
   deletePersonHandler = (personIndex) => { 
@@ -157,7 +181,7 @@ class App extends Component {
         // Applies the .App CSS class and styles to this div.
         // The CSS loader transforms the CSS classname we set up 
         // in the CSS file into a unique one.
-        <div className={classes.App}>
+        <Aux>
           <button
             onClick={() => {
               this.setState( { showCockpit: false });
@@ -178,11 +202,11 @@ class App extends Component {
 
           {persons}
       
-        </div>
+        </Aux>
     );
   }
 }
 
 // A higher-order component.
 // A component wrapping another component.
-export default App;
+export default withClass(App, classes.App);

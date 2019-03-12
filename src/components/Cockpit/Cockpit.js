@@ -1,10 +1,16 @@
 // A functional component.
 // We don't want to manage state here.
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import classes from './Cockpit.css';
 
 const cockpit = (props) => {
+
+  // Our reference.
+  // We could pass in an initial value if we want,
+  // but that is more advanced than what we want.
+  const toggleBtnRef = useRef(null);
+
 
   // Basically is componentDidMount and componentDidUpdate
   // combined into one hook.
@@ -13,10 +19,11 @@ const cockpit = (props) => {
 
     // A fake HTTP request.
     // If we just want "componentDidMount()"
-    setTimeout(() => {
-      alert('Saved data to cloud!');
-    }, 1000);
+    // setTimeout(() => {
+    //   alert('Saved data to cloud!');
+    // }, 1000);
 
+    toggleBtnRef.current.click();
 
     return () => {
       console.log('[Cockpit.js] cleanup work in useEffect');
@@ -68,8 +75,9 @@ const cockpit = (props) => {
             <p className={assignedClasses.join(' ')}>This is really working!</p>
 
             <button 
-                className={btnClass}
-                onClick={props.clicked}>Toggle Persons</button>
+              ref={toggleBtnRef}
+              className={btnClass}
+              onClick={props.clicked}>Toggle Persons</button>
         </div>
     );
 };

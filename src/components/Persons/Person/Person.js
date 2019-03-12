@@ -8,7 +8,23 @@ import withClass from '../../../hoc/withClass';
 import classes from './Person.css';
 
 class Person extends Component { 
-    // return <p>I'm a Person and I am {Math.floor(Math.random() * 30)} years old!</p>
+
+    constructor(props) {
+
+        super(props)
+        // createRef() is a method offered  
+        // on the React object we are importing.
+        // We are storing the method in the inputElement.
+        // That means that inputElement isn't necessarily our input.
+        // inputElement is any reference object that React gives us.
+        this.inputElementRef = React.createRef();
+    }
+
+    componentDidMount() {
+
+        // current = gives us access to our current reference.
+        this.inputElementRef.current.focus();
+    }
 
     render() {
         console.log('[Person.js] rendering...');
@@ -28,6 +44,18 @@ class Person extends Component {
                 //     We then output the name as the value of the input */}
                 <input 
                     key="i3"
+                    
+                    // Here, we are getting access to the input element
+                    // and then we are storing it in a global property
+                    // so that from now on, we can use it anywhere
+                    // in our application.
+                    // ref={(inputEl) => {this.inputElement = inputEl}}
+
+                    // Behind the scenes, React will make a connection.
+                    // inputElementRef will allow me access 
+                    // to the element on which this ref assignment
+                    // was placed.
+                    ref={this.inputElementRef}
                     type="text" 
                     onChange={this.props.changed} 
                     value={this.props.name}

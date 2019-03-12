@@ -8,7 +8,10 @@ import Cockpit from '../components/Cockpit/Cockpit';
 // A function that returns a component, but not a component itself.
 import withClass from '../hoc/withClass';
 
-import Aux from '../hoc/Auxiliary'
+import Aux from '../hoc/Auxiliary';
+
+// Should wrap all parts of app that needs access to this context.
+import AuthContext from '../context/auth-context';
 
 class App extends Component {
 
@@ -30,7 +33,8 @@ class App extends Component {
       otherState: "some other value",
       showPersons: false,
       showCockpit: true,
-      changeCounter: 0
+      changeCounter: 0,
+      authenticated: false
     }
   }
 
@@ -144,6 +148,10 @@ class App extends Component {
   togglePersonsHandler = () => { 
     const doesShow = this.state.showPersons;
     this.setState({showPersons: !doesShow})
+  };
+
+  loginHandler = () => {
+    this.setState({authenticated: true});
   }
 
   render() {
@@ -163,9 +171,13 @@ class App extends Component {
 
       // This is one component that renders the lists
       persons = <Persons 
-          persons={this.state.persons}
-          clicked={this.deletePersonHandler}
-          changed={this.nameChangedHandler} />;
+        persons={this.state.persons}
+        clicked={this.deletePersonHandler}
+        changed={this.nameChangedHandler} 
+
+        // Passing authentication status to Cockpit.js
+        isAuthenticated={this.state.authenticated}
+      />;
     }
 
     // === One way to dynamically add classes: array of strings. ===
@@ -190,17 +202,27 @@ class App extends Component {
             Remove Cockpit
           </button>
           
-          {this.state.showCockpit ? (
-            <Cockpit 
-              title={this.props.appTitle}
-              showPersons={this.state.showPersons}
-              // persons={this.state.persons}
-              personsLength={this.state.persons.length}
-              clicked={this.togglePersonsHandler} 
-            />
-          ) : null}
+          {/* Accepts a value prop */}
+          <AuthContext.Provider 
+            value={{
+              authenticated: this.state.authenticated, 
+              login: this.loginHandler
+            }}
+          >
+            {this.state.showCockpit ? (
+              <Cockpit 
+                title={this.props.appTitle}
+                showPersons={this.state.showPersons}
+                // persons={this.state.persons}
+                personsLength={this.state.persons.length}
+                clicked={this.togglePersonsHandler} 
+                // login={this.loginHandler}
+              />
+            ) : null}
 
-          {persons}
+            {persons}
+          </AuthContext.Provider>
+          
       
         </Aux>
     );

@@ -21,10 +21,20 @@ class Person extends Component {
         this.inputElementRef = React.createRef();
     }
 
+    // Allows React to automatically connect the class-based component 
+    // to your context behind the scenes.
+    // Gives you a new property: this.context.
+    static contextType = AuthContext;
+
+
     componentDidMount() {
 
         // current = gives us access to our current reference.
         this.inputElementRef.current.focus();
+
+        // Allows us to get access to our context 
+        // where we previously couldn't.
+        console.log(this.context.authenticated);
     }
 
     render() {
@@ -36,10 +46,8 @@ class Person extends Component {
         // For now, we are assigning our own keys to each object.
         return (
             <Aux>
-                <AuthContext.Consumer>
-                    {(context) => context.authenticated ? <p>Authenticated!</p> : <p>Please log in.</p>}
-                </AuthContext.Consumer>
-
+                {this.context.authenticated ? <p>Authenticated!</p> : <p>Please log in.</p>}
+                
                 <p key="i1" onClick={this.props.click}>
                     I'm {this.props.name} and I am {this.props.age} years old!
                 </p>

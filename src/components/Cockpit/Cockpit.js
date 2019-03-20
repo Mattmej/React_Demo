@@ -1,7 +1,7 @@
 // A functional component.
 // We don't want to manage state here.
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import classes from './Cockpit.css';
 import AuthContext from '../../context/auth-context';
 
@@ -11,6 +11,11 @@ const cockpit = (props) => {
   // We could pass in an initial value if we want,
   // but that is more advanced than what we want.
   const toggleBtnRef = useRef(null);
+
+  // Holds info about our AuthContext data.
+  const authContext = useContext(AuthContext);
+
+  console.log(authContext.authenticated);
 
 
   // Basically is componentDidMount and componentDidUpdate
@@ -72,21 +77,16 @@ const cockpit = (props) => {
 
     return (
         <div className={classes.Cockpit}>
-            <h1>Hi I am a React app!</h1>
-            <p className={assignedClasses.join(' ')}>This is really working!</p>
+          <h1>Hi I am a React app!</h1>
+          <p className={assignedClasses.join(' ')}>This is really working!</p>
 
-            <button 
-              ref={toggleBtnRef}
-              className={btnClass}
-              onClick={props.clicked}>Toggle Persons
-            </button>
+          <button 
+            ref={toggleBtnRef}
+            className={btnClass}
+            onClick={props.clicked}>Toggle Persons
+          </button>
 
-            <AuthContext.Consumer>
-              {context => <button onClick={context.login}>Log in</button>}
-            </AuthContext.Consumer>
-
-            
-
+          <button onClick={authContext.login}>Log in</button>
         </div>
     );
 };
